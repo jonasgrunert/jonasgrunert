@@ -30,11 +30,13 @@ const eleventyComputed = {
               <textarea name="output-1" id="output-1" readonly aria-label="Result Task 1">
               </textarea>
             </label>
-            <label id="label-2">
-              Result Task 2
-              <textarea name="output-2" id="output-2" readonly aria-label="Result Task 2">
-              </textarea>
-            </label>
+            {% if day != 25 %}
+              <label id="label-2">
+                Result Task 2
+                <textarea name="output-2" id="output-2" readonly aria-label="Result Task 2">
+                </textarea>
+              </label>
+            {% endif %}
           </div>
           <button id="exec" type="submit">Execute</button>
         </div>
@@ -67,7 +69,12 @@ const eleventyComputed = {
         }
         form.addEventListener("submit", (evt) => {
           evt.preventDefault();
+          const btn = document.getElementById("exec");
+          btn.setAttribute("aria-busy", "true");
+          btn.setAttribute("disabled", "");
           sol.execute();
+          btn.removeAttribute("aria-busy");
+          btn.removeAttribute("disabled");
         })
     </script>
   </div>

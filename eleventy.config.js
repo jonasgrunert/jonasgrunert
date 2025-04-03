@@ -1,4 +1,4 @@
-import { readFileSync, copyFileSync, constants } from "node:fs";
+import { readFileSync, cpSync, constants } from "node:fs";
 import { dirname, join, isAbsolute } from "node:path";
 import { parse } from "ini";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
@@ -38,7 +38,7 @@ export default async function (eleventyConfig) {
         }
         const path = join(
           isAbsolute(node.attrs.src) ? process.cwd() : dirname(ctx.inputPath),
-          node.attrs.src
+          node.attrs.src,
         );
         const svgString = readFileSync(path, { encoding: "utf-8" });
         const optimized = optimize(svgString, {
@@ -57,7 +57,7 @@ export default async function (eleventyConfig) {
         });
         return { content: [optimized.data] };
       },
-      { order: -2 }
+      { order: -2 },
     );
   });
   eleventyConfig.addPlugin(IdAttributePlugin);
@@ -70,7 +70,7 @@ export default async function (eleventyConfig) {
         {
           name: "Segoe UI",
           data: await fetch(
-            "https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff"
+            "https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff",
           ).then((res) => res.arrayBuffer()),
           weight: 700,
           style: "normal",
@@ -96,15 +96,15 @@ export default async function (eleventyConfig) {
       isAbsolute(value)
         ? this.eleventy.directories.input
         : dirname(this.page.inputPath),
-      value
+      value,
     );
     const target = join(
       isAbsolute(value)
         ? this.eleventy.directories.output
         : dirname(this.page.outputPath),
-      value
+      value,
     );
-    copyFileSync(path, target, constants.COPYFILE_FICLONE);
+    cpSync(path, target, { recursive: true });
     return value;
   });
   eleventyConfig.addPreprocessor("drafts", "njk,md,liquid", (data, content) => {
@@ -119,7 +119,7 @@ export default async function (eleventyConfig) {
 
   const modules = parse(readFileSync(".gitmodules", { encoding: "utf-8" }));
   const aoc = Object.entries(
-    Object.groupBy(Object.values(modules), (k) => k.parent ?? k.key)
+    Object.groupBy(Object.values(modules), (k) => k.parent ?? k.key),
   )
     .toSorted(([, a], [_, b]) => a.length - b.length)
     .map(([k, v]) => [k, v.toSorted((a, b) => a.key.localeCompare(b.key))]);
@@ -149,8 +149,8 @@ export default async function (eleventyConfig) {
                 Object.entries(filename).map(([key, value]) => [
                   path + "/" + key,
                   value,
-                ])
-              )
+                ]),
+              ),
         );
       };
       await config.default(eleventyConfig);
@@ -173,7 +173,7 @@ export default async function (eleventyConfig) {
       compileOptions: {
         permalink: (content, path) => {
           const match = Object.keys(paths).find((k) =>
-            path.startsWith("./" + k)
+            path.startsWith("./" + k),
           );
           if (match)
             return paths[match].compileOptions.permalink(content, path);
