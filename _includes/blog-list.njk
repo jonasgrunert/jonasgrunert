@@ -1,0 +1,28 @@
+---
+layout: main.njk
+---
+{% if page.url != "/blog/" %}
+<nav aria-label="breadcrumb">
+    <ul>
+        <li><a href="/blog">Blog</a></li>
+    </ul>
+</nav>
+{% endif %}
+
+{{ content | safe }}
+
+{% for post in pagination.items %}
+{% if post.page.fileSlug != "tags" %}
+    {% include "short-blog.njk" %}
+{% endif %}
+{% endfor %}
+
+<div class="footer">
+    {% if pagination.pageNumber != 0 %}
+    <a href="/blog/{% if pagination.pageNumber != 1 %}{{pagination.pageNumber-1}}{% endif %}">Previous</a>
+    {% endif %}
+    <p>Page {{ pagination.pageNumber+1 }} of {{ pagination.pages.length }}</p>
+    {% if pagination.pageNumber != pagination.pages.length-1 %}
+    <a href="/blog/{{pagination.pageNumber+1}}">Next</a>
+    {% endif %}
+</div>

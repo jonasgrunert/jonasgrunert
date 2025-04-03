@@ -1,0 +1,14 @@
+<article>
+    <header><h4><a href="{{post.page.url}}">{{post.data.title}}</a></h4></header>
+    <p>{{post.data.page.excerpt}}</p>
+    <footer>
+    <div class="tags">
+    {% for tag in post.data.tags %}
+        {% if tag != "blog" %}
+            <a href="/blog/tags/#{{tag|slugify}}" class="tag">{{tag}}</a>
+        {% endif %}
+    {% endfor %}
+    </div>
+    <p class="code-date">{{post.page.date | htmlDate("dd.MM.yyyy")}}</p>
+    </footer>
+</article>

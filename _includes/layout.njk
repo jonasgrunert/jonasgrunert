@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:type" content="{{contentType | default('website')}}" />
+    <meta property="og:url" content="{{host}}{{ page.url | url}}" />
+    {%if ogImage %}
+      <meta property="og:image" content="{{ogImage | copy }}" />
+    {% else %}
+      {% ogImage "og-image.og.njk", {title: title} %}
+    {% endif %}
+    <meta property="og:description" content="{{page.excerpt | default(description) | excerpt }}"/>
+    <meta property="og:site_name" content="Jonas Grunert" />
+    <link
+      rel="stylesheet"
+      href="/bundle.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/prismjs@1.29.0/themes/prism-tomorrow.min.css"
+    />
+</head>
+<body>
+    <header>
+    <nav>
+        <ul>
+            <li><a href="/">Jonas Grunert</a></li>
+        </ul>
+        <ul>
+          {% for pages in navigation %}
+            {% if pages[1].length > 1 %}
+              <li>
+                <details class="dropdown">
+                  <summary role="button">
+                    {{pages[0]}}
+                  </summary>
+                  <ul dir="rtl">
+                    {% for sub in pages[1] %}
+                      <li><a href="/{{ pages[0] | slugify }}/{{ sub.key | slugify }}/{{ sub.main | default('') }}">{{ sub.key }}</a></li>
+                    {% endfor %}
+                  </ul>
+                </details>
+              </li>
+            {% else %}
+              <li><a href="/{{pages[0] | slugify }}">{{pages[0]}}</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+    </nav>
+    </header>
+    {{content | safe }}
+    <footer><p>
+      Made with ❤ in Berlin by 
+      <a href="https://jonas.grunert.berlin">Jonas Grunert</a>
+      in {{ page.date | htmlDate("yyyy") }}. 
+      <a href="https://github.com/jonasgrunert/jonasgrunert">Source</a></p>
+    </footer>
+</body>
+</html>

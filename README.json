@@ -1,0 +1,6 @@
+{
+    "layout": "profile.njk",
+    "title": "Jonas Grunert",
+    "permalink": "/",
+    "ogImage": "./jonas.jpg"
+}

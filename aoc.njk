@@ -1,0 +1,20 @@
+---
+layout: main.njk
+---
+{% for year in aoc | sort(attribute="key") %}
+<div>
+    <h4 class="highlight">{{year.key}}</h4>
+    <p>{% renderFile year.path + "/index.md" %}</p>
+    <ul class="calendar">
+        {% for day in collections[year.key] | sort(attribute="fileSlug") %}
+            {% if day.page.fileSlug.length == 2 %}
+            <li>
+              <a href="/aoc/{{ year.key }}/{{ day.page.fileSlug}}" class="secondary">
+                {{ day.page.fileSlug }}
+              </a>
+            </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endfor %}

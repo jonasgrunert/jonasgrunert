@@ -1,0 +1,28 @@
+---js
+const eleventyComputed = {
+    blogTags: data => {
+        const tags = new Set(data.collections.blog.flatMap(p => p.data.tags).filter(t => t != "blog"))
+        return tags.values().toArray();
+    }
+}
+const layout = "layout.njk"
+---
+<main class="container-fluid has-aside">
+    <aside>
+        <nav>
+            <ul class="tags">
+                {% for tag in blogTags | sort %}
+                    <li><a href="#{{tag | slugify }}" class="secondary">{{ tag }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </aside>
+    <div class="blog">
+        {% for tag in blogTags | sort %}
+        <h4 id="{{tag | slugify}}">{{tag}}</h4>
+            {% for post in collections[tag] %}
+                {% include "short-blog.njk" %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+</main>

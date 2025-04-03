@@ -1,0 +1,74 @@
+---js
+const layout = "layout.njk"
+const eleventyComputed = {
+  title: (data) => `Advent of Code ${data.year} - Day ${ data.page.fileSlug }`
+}
+---
+<main class="container has-aside aoc">
+  <div class="header">
+    <nav aria-label="breadcrumb">
+      <ul>
+        <li><a href="/aoc">Advent of Code</a></li>
+        <li><a href="/aoc/{{year}}">{{year}}</a></li>
+        <li>Day {{ page.fileSlug }}</li>
+      </ul>
+    </nav>
+    <h2>Day {{page.fileSlug}}</h2>
+  </div>
+  {% include "aoc-days.njk" %}
+  <div class="content">
+    <form id="form">
+      <div class="grid">
+        <label>
+          Input
+          <textarea name="input" id="input" aria-label="Input">{{ input }}</textarea>
+        </label>
+        <div class="horiontal">
+          <div>
+            <label  id="label-1">
+              Result Task 1
+              <textarea name="output-1" id="output-1" readonly aria-label="Result Task 1">
+              </textarea>
+            </label>
+            <label id="label-2">
+              Result Task 2
+              <textarea name="output-2" id="output-2" readonly aria-label="Result Task 2">
+              </textarea>
+            </label>
+          </div>
+          <button id="exec" type="submit">Execute</button>
+        </div>
+      </div>
+      <div class="task">
+        <div>
+        </div>
+      </div>
+    </form>
+    <div id="error"></div>
+    {% highlight lang %}{{ content | safe }}{% endhighlight %}
+    <p class="code-date">Last edited {{page.date | htmlDate("dd. MMMM yyyy HH:mm") }}</p>
+    <script type="module">
+        import sol from "./{{ day }}.js";
+        const form = document.getElementById("form");
+        sol.filename = "{{ day }}";
+        sol.reader = () => new FormData(form).get("input")
+        sol.reporter = (name, result, _expect, time) => {
+          const part = name.slice(-1);
+          document.getElementById(`output-${part}`).value = result;
+          const lab = document.getElementById(
+            `label-${part}`,
+          )
+          lab.firstChild.textContent = `Result Task ${part} (${time} ms)`;
+          if(part == 2){
+            const btn = document.getElementById("exec");
+            btn.removeAttribute("disabled");
+            btn.innerHTML = `Execute`;
+          }
+        }
+        form.addEventListener("submit", (evt) => {
+          evt.preventDefault();
+          sol.execute();
+        })
+    </script>
+  </div>
+</main>

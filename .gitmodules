@@ -1,0 +1,20 @@
+[submodule "aoc2024"]
+	path = aoc2024
+	url = https://github.com/jonasgrunert/aoc2024
+	parent = "AoC"
+	key = "2024"
+[submodule "adventofcode2023"]
+	path = adventofcode2023
+	url = https://github.com/jonasgrunert/adventofcode2023
+	parent = "AoC"
+	key = "2023"
+[submodule "adventofcode2022"]
+	path = adventofcode2022
+	url = https://github.com/jonasgrunert/adventofcode2022
+	parent = "AoC"
+	key = "2022"
+[submodule "adventofcode2021"]
+	path = adventofcode2021
+	url = https://github.com/jonasgrunert/adventofcode2021
+	parent = "AoC"
+	key = "2021"

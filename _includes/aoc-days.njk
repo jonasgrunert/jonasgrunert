@@ -1,0 +1,18 @@
+<aside>
+    <nav>
+      <details open>
+        <summary>{{ year }} Days</summary>
+        <ul class="aoc">
+          {% for day in collections[year] | sort(attribute="fileSlug") %}
+            {% if day.page.fileSlug.length == 2 %}
+            <li>
+              <a href="/aoc/{{ year }}/{{ day.page.fileSlug}}" class="secondary" {%if day.page.fileSlug == page.fileSlug %}aria-current="page"{% endif %}>
+                {{ day.page.fileSlug }}
+              </a>
+            </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </details>
+    </nav>
+  </aside>

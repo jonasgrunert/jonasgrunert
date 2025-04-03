@@ -2,17 +2,17 @@
 
 #### M.Sc. Data Engineering
 
-### About me
+My name is Jonas and I am a developer born, raised and based in Berlin. I love a good complex problem and even more a good solution. Nerdsinping me isn't hard.
 
-My name is Jonas and I am a developer boirn, raised and based in Berlin. I love a good complex problem and even more a good solution. Nerdsinping me isn't hard.
+---
 
 ### Projects I built in the past (and that are open source)
 
 - [Gatsby based Travel Blog for my Sister](https://fenia.grunert.berlin/)
-- [Advent of Code Solutions for 2022 right in your Browser ( and on th server) using Deno](https://aoc2022.grunert.berlin/)
 - [A JAMstack website for Event signups](https://www.mhawien.at/)
 - [A website computing the standings in the LEC](https://lec2023-top8.grunert.berlin/)
 - [A webpage analyzing votes of the LEC MVP](https://lec-allstars.netlify.app/)
+- [Personal Page including Blog & Advent of Code](https://jonas.grunert.berlin)
 
 ### My skills & interest
 
@@ -49,6 +49,7 @@ My name is Jonas and I am a developer boirn, raised and based in Berlin. I love 
 - Rust
 - Language and Compiler Design
 - API and Microservices
+- Event STreaming
 
 ### My skillset
 

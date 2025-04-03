@@ -1,0 +1,22 @@
+---js
+const layout = "layout.njk"
+const eleventyComputed = {
+  title: (data) => `Advent of Code ${data.year}`,
+  permalink: data => `aoc/${data.year}/index.html`
+}
+---
+<main class="container has-aside aoc">
+  <div class="header">
+    <nav aria-label="breadcrumb">
+      <ul>
+        <li><a href="/aoc">Advent of Code</a></li>
+        <li>{{year}}</li>
+      </ul>
+    </nav>
+    <h2>Year {{year}}</h2>
+  </div>
+  {% include "aoc-days.njk" %}
+  <div>
+  {{content | safe }}
+  </div>
+</main>

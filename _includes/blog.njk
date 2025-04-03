@@ -1,0 +1,38 @@
+---
+layout: layout.njk
+---
+<main class="container-fluid has-aside">
+    <aside>
+        <nav>
+            {% for heading in headings %}
+            <details open>
+                <summary><a href="#{{heading.heading | slugify }}" class="secondary">{{ heading.heading }}</a></summary>
+                <ul>
+                    {% for sub in heading.sub %}
+                        <li><a href="#{{sub.heading | slugify }}" class="secondary">{{ sub.heading }}</a></li>
+                    {% endfor %}
+                </ul>
+            </details>
+            {% endfor %}
+        </nav>
+    </aside>
+    <div class="blog">
+        <nav aria-label="breadcrumb">
+            <ul>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/blog/{{parent.url}}">{{ parent.name }}</a></li>
+            </ul>
+        </nav>
+        <h2>{{title}}</h2>
+        
+        <div>
+            {% for tag in tags %}
+                {% if tag != "blog" and tag != parent.name | slugify %}
+                    <a class="tag" href="/blog/tags/#{{tag|slugify}}">{{tag}}</a>
+                {% endif %}
+            {% endfor %}
+            <p class="code-date">Last edited: {{page.date|htmlDate}}</p>
+        </div>
+        {{ content | safe }}
+    </div>
+</main>

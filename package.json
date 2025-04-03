@@ -1,0 +1,26 @@
+{
+  "name": "jonasgrunert",
+  "version": "1.0.0",
+  "description": "#### M.Sc. Data Engineering",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-img": "^6.0.1",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
+    "@picocss/pico": "^2.1.1",
+    "clean-css": "^5.3.3",
+    "eleventy-plugin-og-image": "^4.0.1",
+    "esbuild": "^0.25.1",
+    "ini": "^5.0.0",
+    "luxon": "^3.6.0",
+    "svgo": "^3.3.2",
+    "unist-util-visit": "^5.0.0"
+  }
+}
