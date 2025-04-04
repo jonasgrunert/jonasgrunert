@@ -51,6 +51,7 @@ const eleventyComputed = {
     <p class="code-date">Last edited {{page.date | htmlDate("dd. MMMM yyyy HH:mm") }}</p>
     <script type="module">
         import sol from "./{{ day }}.js";
+        window.isTest = false;
         const form = document.getElementById("form");
         sol.filename = "{{ day }}";
         sol.reader = () => new FormData(form).get("input")
@@ -69,10 +70,15 @@ const eleventyComputed = {
         }
         form.addEventListener("submit", (evt) => {
           evt.preventDefault();
+          document.getElementById("error").innerHTML = "";
           const btn = document.getElementById("exec");
           btn.setAttribute("aria-busy", "true");
           btn.setAttribute("disabled", "");
-          sol.execute();
+          try{
+            sol.execute();
+          } catch (e){
+            document.getElementById("error").innerHTML = `<article>Error: ${e.toString()}</article>`;
+          }
           btn.removeAttribute("aria-busy");
           btn.removeAttribute("disabled");
         })

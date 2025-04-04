@@ -45,6 +45,10 @@ textarea {
         grid-column-gap: var(--pico-grid-column-gap);
         flex: 4;
     }
+    .container.has-aside aside {
+        position: sticky;
+        top: 6rem;
+    }
 }
 .blog > :not(.code, aside) {
     grid-column: 1 / 1;
@@ -203,4 +207,23 @@ img {
 }
 .container.profile img {
     border-radius: 999px;
+}
+#error article {
+    border-color: rgb(155, 35, 24);
+    background-color: rgb(155, 35, 24);
+    border-radius: 4px;
+}
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+}
+#form {
+    view-transition-name: input;
+}
+::view-transition-old(input),
+::view-transition-new(input) {
+  height: 100%;
 }
