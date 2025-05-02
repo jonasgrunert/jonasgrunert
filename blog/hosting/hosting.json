@@ -1,0 +1,9 @@
+{
+    "parent": {
+        "name": "Hosting",
+        "url": "hosting"
+    },
+    "tags": [
+        "hosting"
+    ]
+}

@@ -12,6 +12,7 @@
     {% else %}
       {% ogImage "og-image.og.njk", {title: title} %}
     {% endif %}
+    {% favicons 'logo-tech.svg' %}
     <meta property="og:description" content="{{page.excerpt | default(description) | excerpt }}"/>
     <meta property="og:site_name" content="Jonas Grunert" />
     <link
@@ -27,7 +28,7 @@
     <header>
     <nav>
         <ul>
-            <li><a href="/">Jonas Grunert</a></li>
+            <li><a href="/"><img src="/logo-tech.svg"/>Jonas Grunert</a></li>
         </ul>
         <ul>
           {% for pages in navigation %}
@@ -58,5 +59,29 @@
       in {{ page.date | htmlDate("yyyy") }}. 
       <a href="https://github.com/jonasgrunert/jonasgrunert">Source</a></p>
     </footer>
+    <dialog id="detail" role="presentation"></dialog>
+    <script type="module">
+      const isOpenClass = "modal-is-open";
+      const dialog = document.getElementById("detail");
+      function closeModal() {
+        document.documentElement.classList.remove(isOpenClass);
+        dialog.close();
+        dialog.replaceChildren();
+      }
+      document.addEventListener("click", (evt) => {
+        if(dialog.hasAttribute("open")){
+          closeModal();
+        } else if(evt.target.matches("main figure *")){
+          dialog.appendChild(evt.target.closest("figure").cloneNode(true));
+          document.documentElement.classList.add(isOpenClass);
+          dialog.showModal();
+        }
+      })
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeModal();
+        }
+      });
+    </script>
 </body>
 </html>

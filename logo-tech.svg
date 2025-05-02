@@ -1,0 +1,25 @@
+<svg version="1.1"
+    viewBox="0 0 260 260"
+    xmlns="http://www.w3.org/2000/svg">
+    <rect width="45" height="90" x="57.5" y="65" fill="rgb(0 137 90)" />
+    <circle cx="130" cy="37.5" r="22.5" fill="rgb(0 137 90)" />
+    <path fill="rgb(0 137 90)"
+        d="
+        M 107.5 65
+        h 45
+        v 135
+        a 45 45 0 0 1 -45 45
+        z" />
+    <path fill="rgb(0 137 90)"
+        d="
+        M 102.5 245
+        a 45 45 0 0 1 -45 -45
+        h 45
+        z" />
+    <path fill="rgb(0 137 90)"
+        d="
+        M 157.5 65
+        a 45 45 0 0 1 45 45
+        a 45 45 0 0 1 -45 45
+        z" />
+</svg>

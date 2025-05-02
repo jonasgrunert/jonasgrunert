@@ -17,21 +17,23 @@ layout: layout.njk
         </nav>
     </aside>
     <div class="blog">
-        <nav aria-label="breadcrumb">
-            <ul>
-                <li><a href="/blog">Blog</a></li>
-                <li><a href="/blog/{{parent.url}}">{{ parent.name }}</a></li>
-            </ul>
-        </nav>
-        <h2>{{title}}</h2>
-        
-        <div>
-            {% for tag in tags %}
-                {% if tag != "blog" and tag != parent.name | slugify %}
-                    <a class="tag" href="/blog/tags/#{{tag|slugify}}">{{tag}}</a>
-                {% endif %}
-            {% endfor %}
-            <p class="code-date">Last edited: {{page.date|htmlDate}}</p>
+        <div class="blog-header">
+            <nav aria-label="breadcrumb">
+                <ul>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/blog/{{parent.url}}">{{ parent.name }}</a></li>
+                </ul>
+            </nav>
+            <h2>{{title}}</h2>
+            
+            <div>
+                {% for tag in tags %}
+                    {% if tag != "blog" and tag != parent.name | slugify %}
+                        <a class="tag" href="/blog/tags/#{{tag|slugify}}">{{tag}}</a>
+                    {% endif %}
+                {% endfor %}
+                <p class="code-date">Last edited: {{page.date|htmlDate}}</p>
+            </div>
         </div>
         {{ content | safe }}
     </div>

@@ -1,4 +1,4 @@
-import { readFileSync, cpSync, constants } from "node:fs";
+import { readFileSync, cpSync } from "node:fs";
 import { dirname, join, isAbsolute } from "node:path";
 import { parse } from "ini";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
@@ -8,12 +8,13 @@ import { DateTime } from "luxon";
 import { optimize } from "svgo";
 import CleanCSS from "clean-css";
 import EleventyPluginOgImage from "eleventy-plugin-og-image";
+import faviconsPlugin from "eleventy-plugin-gen-favicons";
 
 export default async function (eleventyConfig) {
   eleventyConfig.htmlTransformer.addPosthtmlPlugin("html", (ctx) => (tree) => {
     if (ctx.inputPath.startsWith("./blog")) {
       tree.match({ tag: "pre" }, (node) => {
-        const lang = /language-(\w+)/.exec(node.attrs.class);
+        const lang = /language-(?:diff-)?(\w+)/.exec(node.attrs.class);
         if (lang === null || node._ignore) return node;
         node._ignore = true;
         return {
@@ -38,7 +39,7 @@ export default async function (eleventyConfig) {
         }
         const path = join(
           isAbsolute(node.attrs.src) ? process.cwd() : dirname(ctx.inputPath),
-          node.attrs.src,
+          node.attrs.src
         );
         const svgString = readFileSync(path, { encoding: "utf-8" });
         const optimized = optimize(svgString, {
@@ -53,13 +54,58 @@ export default async function (eleventyConfig) {
                 currentColor: true,
               },
             },
+            {
+              name: "addTtile",
+              fn: () => ({
+                element: {
+                  enter: (n) => {
+                    if (n.name === "svg") {
+                      n.children = [
+                        {
+                          type: "element",
+                          name: "title",
+                          attributes: {},
+                          children: [
+                            { type: "text", value: node.attrs.alt ?? "" },
+                          ],
+                        },
+                        ...n.children,
+                      ];
+                    }
+                  },
+                },
+              }),
+            },
           ],
         });
-        return { content: [optimized.data] };
+        if (!node.attrs.title) {
+          return { tag: "figure", content: optimized.data };
+        }
+        return {
+          tag: "figure",
+          content: [
+            optimized.data,
+            { tag: "figcaption", content: node.attrs.title ?? "" },
+          ],
+        };
       },
-      { order: -2 },
+      { order: -2 }
     );
+    tree.match({ tag: "img" }, (node) => {
+      if (node._ignore) return node;
+      node._ignore = true;
+      return {
+        tag: "figure",
+        content: [
+          node,
+          node.attrs.title
+            ? { tag: "figcaption", content: node.attrs.title }
+            : undefined,
+        ],
+      };
+    });
   });
+  eleventyConfig.addPlugin(faviconsPlugin, {});
   eleventyConfig.addPlugin(IdAttributePlugin);
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(eleventyImageTransformPlugin);
@@ -70,7 +116,7 @@ export default async function (eleventyConfig) {
         {
           name: "Segoe UI",
           data: await fetch(
-            "https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff",
+            "https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff"
           ).then((res) => res.arrayBuffer()),
           weight: 700,
           style: "normal",
@@ -96,13 +142,13 @@ export default async function (eleventyConfig) {
       isAbsolute(value)
         ? this.eleventy.directories.input
         : dirname(this.page.inputPath),
-      value,
+      value
     );
     const target = join(
       isAbsolute(value)
         ? this.eleventy.directories.output
         : dirname(this.page.outputPath),
-      value,
+      value
     );
     cpSync(path, target, { recursive: true });
     return value;
@@ -119,7 +165,7 @@ export default async function (eleventyConfig) {
 
   const modules = parse(readFileSync(".gitmodules", { encoding: "utf-8" }));
   const aoc = Object.entries(
-    Object.groupBy(Object.values(modules), (k) => k.parent ?? k.key),
+    Object.groupBy(Object.values(modules), (k) => k.parent ?? k.key)
   )
     .toSorted(([, a], [_, b]) => a.length - b.length)
     .map(([k, v]) => [k, v.toSorted((a, b) => a.key.localeCompare(b.key))]);
@@ -149,8 +195,8 @@ export default async function (eleventyConfig) {
                 Object.entries(filename).map(([key, value]) => [
                   path + "/" + key,
                   value,
-                ]),
-              ),
+                ])
+              )
         );
       };
       await config.default(eleventyConfig);
@@ -173,7 +219,7 @@ export default async function (eleventyConfig) {
       compileOptions: {
         permalink: (content, path) => {
           const match = Object.keys(paths).find((k) =>
-            path.startsWith("./" + k),
+            path.startsWith("./" + k)
           );
           if (match)
             return paths[match].compileOptions.permalink(content, path);

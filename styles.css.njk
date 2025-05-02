@@ -2,7 +2,7 @@
 permalink: "bundle.css"
 ---
 {% include "./node_modules/@picocss/pico/css/pico.jade.css" %}
-* {
+*:not(html:has(dialog[open])) {
     scrollbar-gutter: stable;
 }
 pre > code {
@@ -209,8 +209,8 @@ img {
     border-radius: 999px;
 }
 #error article {
-    border-color: rgb(155, 35, 24);
-    background-color: rgb(155, 35, 24);
+    border-color: hsl(5deg 73.2% 35.1%);
+    background-color: hsl(5deg 73.2% 35.1%);
     border-radius: 4px;
 }
 @view-transition {
@@ -226,4 +226,49 @@ img {
 ::view-transition-old(input),
 ::view-transition-new(input) {
   height: 100%;
+}
+
+.token.deleted:not(.prefix) {
+	background-color: hsl(5deg 73.2% 35.1% / 20%);
+}
+.token.deleted.prefix  {
+	color: hsl(5deg 73.2% 35.1%);
+}
+.token.inserted:not(.prefix) {
+	background-color: hsl(159deg 100% 26.9% / 20%);
+}
+.token.inserted.prefix  {
+	color: hsl(159deg 100% 26.9%);
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+}
+
+a > code {
+    color: var(--pico-primary);
+    padding-block: 0;
+}
+header nav a {
+    display: flex !important;
+    align-items: center;
+}
+header nav a svg {
+    height: 3rem;
+}
+figure figcaption {
+    font-style: italic;
+}
+dialog figure {
+    margin: 5rem;
 }
