@@ -20,7 +20,7 @@ const layout = "layout.njk"
     <div class="blog">
         {% for tag in blogTags | sort %}
         <h4 id="{{tag | slugify}}">{{tag}}</h4>
-            {% for post in collections[tag] %}
+            {% for post in collections[tag] | reverse %}
                 {% include "short-blog.njk" %}
             {% endfor %}
         {% endfor %}
