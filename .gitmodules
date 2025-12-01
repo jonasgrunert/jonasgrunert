@@ -22,12 +22,6 @@
 	parent = "AoC"
 	key = "2021"
 	update = merge
-# [submodule "aoc2015"]
-# 	path = aoc2015
-# 	url = https://github.com/jonasgrunert/aoc2015.git
-# 	parent = "AoC"
-# 	key= "2015"
-# 	update = merge
 [submodule "aoc2025"]
 	path = aoc2025
 	url = https://github.com/jonasgrunert/aoc2025.git
